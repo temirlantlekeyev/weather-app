@@ -20,6 +20,7 @@ import mist from "./assets/50d@2x.png"
 import { faWind } from '@fortawesome/free-solid-svg-icons'
 import { faWater } from '@fortawesome/free-solid-svg-icons'
 import axios from 'axios'
+import Weather from './weather'
 
 function App() {
 
@@ -67,6 +68,36 @@ function App() {
   }
 
   const inputRef = useRef()
+  const [weatherData, setWeatherData] = useState([])
+
+  const addData = (city)=> {
+    try{
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${city}&appid=aefd2f71e63c8a5170986fe5d1730612`)
+      .then((response)=> {
+        console.log(response)
+        const icon = icons[response.data.weather[0].icon] || clearSkyd
+        setWeather({
+          location: response.data.name,
+          tempurature: Math.floor(response.data.main.temp),
+          feels : Math.floor(response.data.main.feels_like),
+          wind : response.data.wind.speed,
+          humidity : response.data.main.humidity,
+          description: response.data.weather[0].description,
+          icon : icon
+        })
+        setWeatherData((data)=>[...data, weatherData])
+      // setSearch("")
+      })
+    }   
+     catch (error) {
+      // if(city !== response.data.name || "")
+      //   alert("City not found")
+      //   console.error(error)
+      //   return
+     }  
+    
+    setSearch("")
+  }
 
   const getWeather = (city)=> {
     
@@ -84,23 +115,28 @@ function App() {
           description: response.data.weather[0].description,
           icon : icon
         })
-      
-      })
+      setSearch("")
+      }) 
     }   
      catch (error) {
-      // if(city !== response.data.name)
+      alert("city not found")
+        // console.error("City not found")
+      // if(city !== response.data.name || "")
       //   alert("City not found")
-      //   console.error("City not found")
-     }
+      //   console.error(error)
+      //   return
+     }  
   }
 
   useEffect(()=>{
-    getWeather("")
+    // getWeather("")
   }, [])
 
   return (
+  
     <> 
-      <div className="searchContainer">
+    <Weather/>
+      {/* <div className="searchContainer">
             <input className="searchInput"
             ref={inputRef}
             value={search} 
@@ -108,9 +144,9 @@ function App() {
             placeholder="Enter city"
             onChange={(e)=> handleSearch(e)} />
             <button className="searchBtn" onClick={()=>getWeather(inputRef.current.value)}><FontAwesomeIcon icon={faMagnifyingGlass} /></button>
-        </div>
+        </div> */}
 
-        {weather ?
+        {/* {weather ?
         <>
           <div className="cardContainer">
             <img className="icon" src={weather.icon}/>
@@ -123,7 +159,7 @@ function App() {
                 <div><span><FontAwesomeIcon icon={faWind} /></span>: {weather.wind} km/h</div>
             </div>
         </div>
-        </> : <></>}
+        </> : <></>} */}
     </>
   )
 }
