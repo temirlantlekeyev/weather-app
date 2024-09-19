@@ -23,18 +23,8 @@ import axios from 'axios'
 const Weather = ()=> {
     
 const apiKey = "aefd2f71e63c8a5170986fe5d1730612"
-  const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=almaty&appid=aefd2f71e63c8a5170986fe5d1730612"
+const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=almaty&appid=aefd2f71e63c8a5170986fe5d1730612"
  
-  // const [count, setCount] = useState(0)
-
-  // const handleCount = () => {
-  //    setCount((count)=> count + 1)
-  // }
-
-//   const [search, setSearch] = useState("")
-//   const [weather, setWeather] = useState("")
-
-
   const icons = {
     "01d" : clearSkyd,
     "01n" : clearSkyn,
@@ -67,7 +57,7 @@ const apiKey = "aefd2f71e63c8a5170986fe5d1730612"
     }
 
 
-  const getData = (event)=> {
+  const getData = ()=> {
   if(searchInput === ""){
     alert("Enter city")
     return
